@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+}
+
+main {
+    min-height: 100vh;
+}
+
+nav {
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    min-height: inherit;
+    position: fixed;
+    padding: 55px;
+}
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    height: 5%;
+}
+
+section {
+    margin-left: 200px;
+}
