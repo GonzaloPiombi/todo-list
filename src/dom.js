@@ -5,8 +5,9 @@ class UI {
     static domController() {
         const info = UI.getInformation();
         const task = UI.addTask(info.title, info.description, info.dueDate, info.priority, info.project);
-        const removeButton = UI.generateTask(task);
-        UI.removeTask(removeButton);
+        const buttons = UI.generateTask(task);
+        UI.removeTask(buttons.removeButton);
+        UI.editTask(buttons.editButton);
     }
     
     static addButtonEvent() {
@@ -34,7 +35,7 @@ class UI {
         const newTask = new Task(title, description, dueDate, priority, project);
 
         //Add the task to the array.
-        newTask.addToArray()
+        newTask.addToArray();
         return newTask;
     }
 
@@ -48,6 +49,7 @@ class UI {
         const priority = document.createElement('p');
         const project = document.createElement('p');
         const removeButton = document.createElement('button');
+        const editButton = document.createElement('button');
 
         title.textContent = obj.title;
         description.textContent = obj.description;
@@ -55,6 +57,7 @@ class UI {
         priority.textContent = obj.priority;
         project.textContent = obj.project;
         removeButton.textContent = 'X';
+        editButton.textContent = 'Edit'
 
         document.querySelector('.tasks').appendChild(taskContainer);
         taskContainer.appendChild(title);
@@ -63,10 +66,11 @@ class UI {
         taskContainer.appendChild(priority);
         taskContainer.appendChild(project);
         taskContainer.appendChild(removeButton);
+        taskContainer.appendChild(editButton);
 
         UI.giveDataAttribute();
 
-        return removeButton;
+        return {removeButton, editButton};
     }
 
     static giveDataAttribute() {
@@ -76,13 +80,51 @@ class UI {
     }
 
     static removeTask(button) {
-        button.addEventListener('click', (e) => {
+        button.addEventListener('click', e => {
             e.path[1].remove();
             Task.removeFromArray(e.path[1].dataset.index);
             UI.giveDataAttribute();
         });
     }
 
+    static editTask(button) {
+        button.addEventListener('click', e => {
+            const items = e.path[1].childNodes;
+            items.forEach(item => {
+                if (item.nodeName === 'P') {
+                    item.setAttribute('contenteditable', 'true');
+                }
+            });
+
+            const saveButton = document.createElement('button');
+            saveButton.textContent = 'Save';
+            e.path[1].appendChild(saveButton);
+
+            saveButton.addEventListener('click', e => {
+                let changes = '';
+                items.forEach(item => {
+                    if (item.contentEditable === 'true') {
+                        changes += item.textContent + '~';
+                        item.contentEditable = 'false';
+                    }
+                });
+                UI.getNewValues(changes, e.path[1].dataset.index);
+                saveButton.remove();
+            });
+        });
+    }
+
+    static getNewValues(string, div) {
+        string = string.split('~');
+        
+        const title = string[0];
+        const description = string[1];
+        const dueDate = string[2];
+        const priority = string[3];
+        const project = string[4];
+     
+        Task.editTask(div, title, description, dueDate, priority, project);
+    }
 }
 
 export default UI
