@@ -5,7 +5,8 @@ class UI {
     static domController() {
         const info = UI.getInformation();
         const task = UI.addTask(info.title, info.description, info.dueDate, info.priority, info.project);
-        UI.generateTask(task);
+        const removeButton = UI.generateTask(task);
+        UI.removeTask(removeButton);
     }
     
     static addButtonEvent() {
@@ -38,17 +39,48 @@ class UI {
     }
 
     static generateTask(obj) {
+        const taskContainer = document.createElement('div');
+        taskContainer.classList.add('task-container');
+
         const title = document.createElement('p');
+        const description = document.createElement('p');
         const dueDate = document.createElement('p');
         const priority = document.createElement('p');
+        const project = document.createElement('p');
+        const removeButton = document.createElement('button');
 
         title.textContent = obj.title;
+        description.textContent = obj.description;
         dueDate.textContent = obj.dueDate;
         priority.textContent = obj.priority;
+        project.textContent = obj.project;
+        removeButton.textContent = 'X';
 
-        document.querySelector('section').appendChild(title);
-        document.querySelector('section').appendChild(dueDate);
-        document.querySelector('section').appendChild(priority);
+        document.querySelector('.tasks').appendChild(taskContainer);
+        taskContainer.appendChild(title);
+        taskContainer.appendChild(description);
+        taskContainer.appendChild(dueDate);
+        taskContainer.appendChild(priority);
+        taskContainer.appendChild(project);
+        taskContainer.appendChild(removeButton);
+
+        UI.giveDataAttribute();
+
+        return removeButton;
+    }
+
+    static giveDataAttribute() {
+        for (let i = 0; i < document.querySelectorAll('.task-container').length; i++) {
+            document.querySelectorAll('.task-container')[i].setAttribute('data-index', i);
+        }
+    }
+
+    static removeTask(button) {
+        button.addEventListener('click', (e) => {
+            e.path[1].remove();
+            Task.removeFromArray(e.path[1].dataset.index);
+            UI.giveDataAttribute();
+        });
     }
 
 }
