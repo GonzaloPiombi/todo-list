@@ -16,6 +16,15 @@ class Task {
     static removeFromArray(index) {
         Task.tasks.splice(index, 1);
     }
+
+    static editTask(index, title, description, dueDate, priority, project) {
+        Task.tasks[index].title = title;
+        Task.tasks[index].description = description;
+        Task.tasks[index].dueDate = dueDate;
+        Task.tasks[index].priority = priority;
+        Task.tasks[index].project = project;
+        console.log(Task.tasks);
+    }
 }
 
 export default Task
