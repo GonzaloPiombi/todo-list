@@ -13,6 +13,9 @@ class Task {
         Task.tasks.push(this);
     }
 
+    static removeFromArray(index) {
+        Task.tasks.splice(index, 1);
+    }
 }
 
 export default Task
