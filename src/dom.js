@@ -51,6 +51,9 @@ class UI {
         const removeButton = document.createElement('button');
         const editButton = document.createElement('button');
 
+        //Add class so when we want to edit date is treated differently from the other inputs and can only be updated as a date.
+        dueDate.classList.add('date');
+
         title.textContent = obj.title;
         description.textContent = obj.description;
         dueDate.textContent = obj.dueDate;
@@ -91,7 +94,13 @@ class UI {
         button.addEventListener('click', e => {
             const items = e.path[1].childNodes;
             items.forEach(item => {
-                if (item.nodeName === 'P') {
+                if (item.nodeName === 'P' && item.classList.contains('date')) {
+                    const date = document.createElement('input');
+                    date.setAttribute('type', 'date');
+                    date.classList.add('date');
+                    item.replaceWith(date);
+                }
+                else if (item.nodeName === 'P') {
                     item.setAttribute('contenteditable', 'true');
                 }
             });
@@ -103,7 +112,14 @@ class UI {
             saveButton.addEventListener('click', e => {
                 let changes = '';
                 items.forEach(item => {
-                    if (item.contentEditable === 'true') {
+                    if (item.classList.contains('date')) {
+                        changes += item.value + '~';
+                        const para = document.createElement('p');
+                        para.classList.add('date');
+                        para.textContent = item.value;
+                        item.replaceWith(para);
+                    }
+                    else if (item.contentEditable === 'true') {
                         changes += item.textContent + '~';
                         item.contentEditable = 'false';
                     }
