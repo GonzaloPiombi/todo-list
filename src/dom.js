@@ -92,42 +92,50 @@ class UI {
 
     static editTask(button) {
         button.addEventListener('click', e => {
-            const items = e.path[1].childNodes;
-            items.forEach(item => {
-                if (item.nodeName === 'P' && item.classList.contains('date')) {
-                    const date = document.createElement('input');
-                    date.setAttribute('type', 'date');
-                    date.classList.add('date');
-                    item.replaceWith(date);
-                }
-                else if (item.nodeName === 'P') {
-                    item.setAttribute('contenteditable', 'true');
-                }
-            });
+            UI.edit(e);
 
             const saveButton = document.createElement('button');
             saveButton.textContent = 'Save';
             e.path[1].appendChild(saveButton);
 
             saveButton.addEventListener('click', e => {
-                let changes = '';
-                items.forEach(item => {
-                    if (item.classList.contains('date')) {
-                        changes += item.value + '~';
-                        const para = document.createElement('p');
-                        para.classList.add('date');
-                        para.textContent = item.value;
-                        item.replaceWith(para);
-                    }
-                    else if (item.contentEditable === 'true') {
-                        changes += item.textContent + '~';
-                        item.contentEditable = 'false';
-                    }
-                });
-                UI.getNewValues(changes, e.path[1].dataset.index);
-                saveButton.remove();
+                UI.save(e);
             });
         });
+    }
+
+    static edit(e) {
+        const items = e.path[1].childNodes;
+        items.forEach(item => {
+            if (item.nodeName === 'P' && item.classList.contains('date')) {
+                const date = document.createElement('input');
+                date.setAttribute('type', 'date');
+                date.classList.add('date');
+                item.replaceWith(date);
+            }
+            else if (item.nodeName === 'P') {
+                item.setAttribute('contenteditable', 'true');
+            }
+        });
+    }
+
+    static save(e) {
+        let changes = '';
+        items.forEach(item => {
+            if (item.classList.contains('date')) {
+                changes += item.value + '~';
+                const para = document.createElement('p');
+                para.classList.add('date');
+                para.textContent = item.value;
+                item.replaceWith(para);
+            }
+            else if (item.contentEditable === 'true') {
+                changes += item.textContent + '~';
+                item.contentEditable = 'false';
+            }
+        });
+        UI.getNewValues(changes, e.path[1].dataset.index);
+        saveButton.remove();
     }
 
     static getNewValues(string, div) {
