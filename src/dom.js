@@ -92,20 +92,20 @@ class UI {
 
     static editTask(button) {
         button.addEventListener('click', e => {
-            UI.edit(e);
+            const items = e.path[1].childNodes;
+            UI.edit(items);
 
             const saveButton = document.createElement('button');
             saveButton.textContent = 'Save';
             e.path[1].appendChild(saveButton);
 
             saveButton.addEventListener('click', e => {
-                UI.save(e);
+                UI.save(e, items, saveButton);
             });
         });
     }
 
-    static edit(e) {
-        const items = e.path[1].childNodes;
+    static edit(items) {
         items.forEach(item => {
             if (item.nodeName === 'P' && item.classList.contains('date')) {
                 const date = document.createElement('input');
@@ -119,7 +119,7 @@ class UI {
         });
     }
 
-    static save(e) {
+    static save(e, items, button) {
         let changes = '';
         items.forEach(item => {
             if (item.classList.contains('date')) {
@@ -135,7 +135,7 @@ class UI {
             }
         });
         UI.getNewValues(changes, e.path[1].dataset.index);
-        saveButton.remove();
+        button.remove();
     }
 
     static getNewValues(string, div) {
