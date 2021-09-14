@@ -2,20 +2,18 @@ body {
     margin: 0;
 }
 
-main {
-    min-height: 100vh;
-}
-
 nav {
     background-color: blue;
     display: flex;
     flex-direction: column;
     min-height: inherit;
     position: fixed;
-    padding: 55px;
+    top: 70px;
+    bottom: 0;
+    padding: 45px;
 }
 
-.projects {
+.to-do {
     display: flex;
     flex-direction: column;
     height: 5%;
@@ -23,4 +21,11 @@ nav {
 
 section {
     margin-left: 200px;
+}
+
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
 }
