@@ -1,4 +1,5 @@
 import Task from './tasks';
+import { compareAsc, format } from 'date-fns'
 
 class UI {
 
@@ -42,6 +43,7 @@ class UI {
     static generateTask(obj) {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
+        taskContainer.setAttribute('data-index', obj.id);
 
         const title = document.createElement('p');
         const description = document.createElement('p');
@@ -71,22 +73,13 @@ class UI {
         taskContainer.appendChild(removeButton);
         taskContainer.appendChild(editButton);
 
-        UI.giveDataAttribute();
-
         return {removeButton, editButton};
-    }
-
-    static giveDataAttribute() {
-        for (let i = 0; i < document.querySelectorAll('.task-container').length; i++) {
-            document.querySelectorAll('.task-container')[i].setAttribute('data-index', i);
-        }
     }
 
     static removeTask(button) {
         button.addEventListener('click', e => {
             e.path[1].remove();
             Task.removeFromArray(e.path[1].dataset.index);
-            UI.giveDataAttribute();
         });
     }
 
@@ -148,6 +141,24 @@ class UI {
         const project = string[4];
      
         Task.editTask(div, title, description, dueDate, priority, project);
+    }
+
+    static dateFilter() {
+        const today = document.querySelector('#today');
+        today.addEventListener('click', e => {
+            const date = new Date();
+            const dateFormat = format(date, 'yyyy-MM-dd');
+            const todayTasks = Task.tasks.filter(task => task.dueDate === dateFormat);
+
+            document.querySelector('.tasks').textContent = '';
+            todayTasks.forEach(task => {
+                const buttons = UI.generateTask(task);
+                UI.removeTask(buttons.removeButton);
+                UI.editTask(buttons.editButton);
+            });
+            console.log(todayTasks)
+            console.log(Task.tasks)
+        });
     }
 }
 

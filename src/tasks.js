@@ -1,3 +1,5 @@
+let idCounter = 0;
+
 class Task {
     constructor(title, description, dueDate, priority, project) {
         this.title = title;
@@ -5,6 +7,11 @@ class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.project = project;
+        this.id = this.getId();
+    }
+
+    getId() {
+        return idCounter++;
     }
 
     static tasks = [];
@@ -14,7 +21,9 @@ class Task {
     }
 
     static removeFromArray(index) {
-        Task.tasks.splice(index, 1);
+        const deleteIndex = Task.tasks.findIndex(task => task.id == index);
+        Task.tasks.splice(deleteIndex, 1);
+        console.log(Task.tasks);
     }
 
     static editTask(index, title, description, dueDate, priority, project) {
