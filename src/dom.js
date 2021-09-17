@@ -1,5 +1,5 @@
 import Task from './tasks';
-import { compareAsc, format } from 'date-fns'
+import { compareAsc, format, isThisMonth, isThisWeek } from 'date-fns'
 
 class UI {
 
@@ -43,7 +43,7 @@ class UI {
     static generateTask(obj) {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
-        taskContainer.setAttribute('data-index', obj.id);
+        taskContainer.setAttribute('id', obj.id);
 
         const title = document.createElement('p');
         const description = document.createElement('p');
@@ -79,7 +79,7 @@ class UI {
     static removeTask(button) {
         button.addEventListener('click', e => {
             e.path[1].remove();
-            Task.removeFromArray(e.path[1].dataset.index);
+            Task.removeFromArray(e.path[1].id);
         });
     }
 
@@ -127,7 +127,7 @@ class UI {
                 item.contentEditable = 'false';
             }
         });
-        UI.getNewValues(changes, e.path[1].dataset.index);
+        UI.getNewValues(changes, e.path[1].id);
         button.remove();
     }
 
@@ -144,8 +144,14 @@ class UI {
     }
 
     static dateFilter() {
-        const today = document.querySelector('#today');
-        today.addEventListener('click', e => {
+        UI.todayFilter();
+        UI.weekFilter();
+        UI.monthFilter();
+    }
+
+    static todayFilter() {
+        const todayButton = document.querySelector('#today');
+        todayButton.addEventListener('click', () => {
             const date = new Date();
             const dateFormat = format(date, 'yyyy-MM-dd');
             const todayTasks = Task.tasks.filter(task => task.dueDate === dateFormat);
@@ -158,6 +164,49 @@ class UI {
             });
             console.log(todayTasks)
             console.log(Task.tasks)
+        });
+    }
+
+    static weekFilter() {
+        const weekButton = document.querySelector('#week');
+        weekButton.addEventListener('click', () => {
+            document.querySelector('.tasks').textContent = '';
+
+            const weekTasks = Task.tasks.filter(task => {
+                const date = task.dueDate.split('-');
+                const year = Number(date[0]);
+                const month = Number(date[1]) - 1;
+                const day = Number(date[2]);
+                const thisWeek = isThisWeek(new Date(year, month, day));
+                if (thisWeek) {
+                    const buttons = UI.generateTask(task);
+                    UI.removeTask(buttons.removeButton);
+                    UI.editTask(buttons.editButton);
+                }
+            });
+        });
+    }
+
+    static monthFilter() {
+        const monthButton = document.querySelector('#month');
+        monthButton.addEventListener('click', () => {
+            document.querySelector('.tasks').textContent = '';
+
+            const monthTasks = Task.tasks.filter(task => {
+                const date = task.dueDate.split('-');
+                const year = Number(date[0]);
+                const month = Number(date[1]) - 1;
+                const day = Number(date[2]);
+                const thisMonth = isThisMonth(new Date(year, month, day));
+                console.log(year, month, day);
+                console.log(thisMonth)
+                if (thisMonth) {
+                    //TODO Put this three functions into a function of its own
+                    const buttons = UI.generateTask(task);
+                    UI.removeTask(buttons.removeButton);
+                    UI.editTask(buttons.editButton);
+                }
+            });
         });
     }
 }
