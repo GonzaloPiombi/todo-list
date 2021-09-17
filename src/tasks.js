@@ -1,4 +1,4 @@
-let idCounter = 0;
+import { v4 as uuidv4 } from 'uuid';
 
 class Task {
     constructor(title, description, dueDate, priority, project) {
@@ -7,11 +7,7 @@ class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.project = project;
-        this.id = this.getId();
-    }
-
-    getId() {
-        return idCounter++;
+        this.id = uuidv4();
     }
 
     static tasks = [];
