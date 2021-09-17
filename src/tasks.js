@@ -22,7 +22,9 @@ class Task {
         console.log(Task.tasks);
     }
 
-    static editTask(index, title, description, dueDate, priority, project) {
+    static editTask(id, title, description, dueDate, priority, project) {
+        const index = Task.tasks.findIndex(task => task.id == id);
+        
         Task.tasks[index].title = title;
         Task.tasks[index].description = description;
         Task.tasks[index].dueDate = dueDate;
