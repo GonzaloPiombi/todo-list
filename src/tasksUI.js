@@ -1,9 +1,9 @@
-import Task from './tasks';
+import { Task } from './tasks';
 import { compareAsc, format, isThisMonth, isThisWeek } from 'date-fns'
 
 class UI {
 
-    static domController() {
+    static displayTask() {
         const info = UI.getInformation();
         const task = UI.addTask(info.title, info.description, info.dueDate, info.priority, info.project);
         const buttons = UI.generateTask(task);
@@ -11,14 +11,13 @@ class UI {
         UI.editTask(buttons.editButton);
     }
     
-    static addButtonEvent() {
-        const addButton = document.querySelector('#add-task-button');
-        addButton.addEventListener('click', (e) => {
+    static addTaskButtonEvent() {
+        const addTaskButton = document.querySelector('#add-task-button');
+        addTaskButton.addEventListener('click', e => {
             e.preventDefault();
-            UI.domController();
+            UI.displayTask();
             console.log(Task.tasks);
         });
-
     }
 
     static getInformation() {
@@ -32,10 +31,7 @@ class UI {
     }
 
     static addTask(title, description, dueDate, priority, project) {
-        //Create new instance of Task.
         const newTask = new Task(title, description, dueDate, priority, project);
-
-        //Add the task to the array.
         newTask.addToArray();
         return newTask;
     }
