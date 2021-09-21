@@ -1,5 +1,7 @@
 import Task from './tasks';
-import UI from './dom';
+import UI from './tasksUI';
+import ProjectUI from './projectUI';
 
-UI.addButtonEvent();
+UI.addTaskButtonEvent();
 UI.dateFilter();
+ProjectUI.addProjectButtonEvent();
