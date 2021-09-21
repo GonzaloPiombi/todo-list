@@ -14,6 +14,12 @@ class Task {
 
     addToArray() {
         Task.tasks.push(this);
+
+        //When a project is specified for the task, find it and add said taks to the array of tasks of the project.
+        if (this.project) {
+            const project = Project.projects.find(project => project.title === this.project);
+            project.tasks.push(this);
+        }
     }
 
     static removeFromArray(index) {
@@ -34,4 +40,23 @@ class Task {
     }
 }
 
-export default Task
+class Project {
+    constructor(title, description, dueDate) {
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.tasks = [];
+        this.id = uuidv4();
+    }
+
+    static projects = [];
+
+    addToArray() {
+        Project.projects.push(this);
+    }
+}
+
+export {
+    Task,
+    Project
+}
