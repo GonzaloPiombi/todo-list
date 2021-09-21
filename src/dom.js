@@ -144,9 +144,23 @@ class UI {
     }
 
     static dateFilter() {
+        UI.homeFilter();
         UI.todayFilter();
         UI.weekFilter();
         UI.monthFilter();
+    }
+
+    static homeFilter() {
+        const homeButton = document.querySelector('#home');
+        homeButton.addEventListener('click', (e) => {
+            document.querySelector('.tasks').textContent = '';
+            
+            Task.tasks.forEach(task => {
+                const buttons = UI.generateTask(task);
+                UI.removeTask(buttons.removeButton);
+                UI.editTask(buttons.editButton);
+            });
+        });
     }
 
     static todayFilter() {
@@ -198,10 +212,7 @@ class UI {
                 const month = Number(date[1]) - 1;
                 const day = Number(date[2]);
                 const thisMonth = isThisMonth(new Date(year, month, day));
-                console.log(year, month, day);
-                console.log(thisMonth)
                 if (thisMonth) {
-                    //TODO Put this three functions into a function of its own
                     const buttons = UI.generateTask(task);
                     UI.removeTask(buttons.removeButton);
                     UI.editTask(buttons.editButton);
