@@ -1,4 +1,5 @@
 import { Project } from './tasks';
+import UI from './tasksUI';
 
 class ProjectUI {
 
@@ -39,6 +40,19 @@ class ProjectUI {
         document.querySelector('.projects ul').appendChild(li);
         li.appendChild(link);
         document.querySelector('select').appendChild(option)
+
+        ProjectUI.displayProject(link, obj);
+    }
+
+    static displayProject(projectButton, project) {
+        projectButton.addEventListener('click', (e) => {
+            document.querySelector('.tasks').textContent = '';
+            project.tasks.forEach(task =>{
+                const buttons = UI.generateTask(task);
+                UI.removeTask(buttons.removeButton);
+                UI.editTask(buttons.editButton);
+            });
+        });
     }
 }
 
