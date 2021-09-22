@@ -22,10 +22,13 @@ class Task {
         }
     }
 
-    static removeFromArray(index) {
-        const deleteIndex = Task.tasks.findIndex(task => task.id == index);
+    static removeFromArray(id, projectName) {
+        const deleteIndex = Task.tasks.findIndex(task => task.id == id);
         Task.tasks.splice(deleteIndex, 1);
-        console.log(Task.tasks);
+
+        const projectIndex = Project.projects.findIndex(project => project.title == projectName);
+        const deleteInProjectIndex = Project.projects[projectIndex].tasks.findIndex(task => task.id == id);
+        Project.projects[projectIndex].tasks.splice(deleteInProjectIndex, 1);
     }
 
     static editTask(id, title, description, dueDate, priority, project) {

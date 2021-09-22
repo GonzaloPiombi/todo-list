@@ -75,7 +75,7 @@ class UI {
     static removeTask(button) {
         button.addEventListener('click', e => {
             e.path[1].remove();
-            Task.removeFromArray(e.path[1].id);
+            Task.removeFromArray(e.path[1].id, e.path[1].childNodes[4].textContent);
         });
     }
 
