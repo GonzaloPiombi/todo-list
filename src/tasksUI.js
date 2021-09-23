@@ -1,4 +1,4 @@
-import { Task } from './tasks';
+import { Project, Task } from './tasks';
 import { compareAsc, format, isThisMonth, isThisWeek } from 'date-fns'
 
 class UI {
@@ -51,6 +51,7 @@ class UI {
 
         //Add class so when we want to edit date is treated differently from the other inputs and can only be updated as a date.
         dueDate.classList.add('date');
+        project.classList.add('project');
 
         title.textContent = obj.title;
         description.textContent = obj.description;
@@ -101,8 +102,7 @@ class UI {
                 date.setAttribute('type', 'date');
                 date.classList.add('date');
                 item.replaceWith(date);
-            }
-            else if (item.nodeName === 'P') {
+            } else if (item.nodeName === 'P' && !item.classList.contains('project')) {
                 item.setAttribute('contenteditable', 'true');
             }
         });
@@ -117,8 +117,7 @@ class UI {
                 para.classList.add('date');
                 para.textContent = item.value;
                 item.replaceWith(para);
-            }
-            else if (item.contentEditable === 'true') {
+            } else if (item.contentEditable === 'true' || item.classList.contains('project')) {
                 changes += item.textContent + '~';
                 item.contentEditable = 'false';
             }

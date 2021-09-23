@@ -46,10 +46,9 @@ class Task {
 }
 
 class Project {
-    constructor(title, description, dueDate) {
+    constructor(title, description) {
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
         this.tasks = [];
         this.id = uuidv4();
     }
@@ -58,6 +57,19 @@ class Project {
 
     addToArray() {
         Project.projects.push(this);
+    }
+
+    static removeFromArray(index) {
+        Project.removeTasks(index);
+        Project.projects.splice(index, 1);
+        return index;
+    }
+
+    static removeTasks(i) {
+        Project.projects[i].tasks.forEach(projectTask => {
+            const index = Task.tasks.findIndex(task => task.id === projectTask.id);
+            Task.tasks.splice(index, 1);
+        });
     }
 }
 
