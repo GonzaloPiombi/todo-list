@@ -15,11 +15,11 @@ class ProjectUI {
 
     static getInformation() {
         const formInfo = document.querySelectorAll('input');
-        const title = formInfo[4].value;
+        const title = formInfo[3].value;
         if (Project.checkExistingProject(title)) {
             return alert('Project already exists!');
         }
-        const description = formInfo[5].value;
+        const description = formInfo[4].value;
         return {title, description};
     }
 
@@ -44,7 +44,7 @@ class ProjectUI {
         document.querySelector('.projects ul').appendChild(li);
         li.appendChild(link);
         li.appendChild(deleteButton);
-        document.querySelector('select').appendChild(option)
+        document.querySelectorAll('select')[1].appendChild(option)
 
         ProjectUI.displayProject(link, obj);
         ProjectUI.removeProject(deleteButton, obj);
