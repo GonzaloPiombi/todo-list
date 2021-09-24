@@ -71,6 +71,10 @@ class Project {
             Task.tasks.splice(index, 1);
         });
     }
+
+    static checkExistingProject(name) {
+        return Project.projects.some(project => project.title === name);
+    }
 }
 
 export {
