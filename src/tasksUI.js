@@ -12,8 +12,8 @@ class UI {
     }
     
     static addTaskButtonEvent() {
-        const addTaskButton = document.querySelector('#add-task-button');
-        addTaskButton.addEventListener('click', e => {
+        const addTaskButton = document.querySelector('#add-task-form');
+        addTaskButton.addEventListener('submit', e => {
             e.preventDefault();
             UI.displayTask();
             console.log(Task.tasks);
