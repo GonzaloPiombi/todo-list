@@ -68,6 +68,7 @@ class UI {
         dueDate.classList.add('date');
         project.classList.add('project');
         priority.classList.add('priority');
+        editButton.classList.add('edit-button');
 
         title.textContent = obj.title;
         dueDate.textContent = obj.dueDate;
@@ -107,6 +108,7 @@ class UI {
 
     static editTask(button) {
         button.addEventListener('click', e => {
+            e.currentTarget.style = 'display: none';
             const items = e.path[1].childNodes;
             UI.edit(items);
 
@@ -176,6 +178,7 @@ class UI {
         });
         UI.getNewValues(changes, e.path[1].id);
         button.remove();
+        e.path[1].lastChild.style = 'display: inline-block';
     }
 
     static getNewValues(string, div) {
