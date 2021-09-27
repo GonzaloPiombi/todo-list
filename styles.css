@@ -2,25 +2,127 @@ body {
     margin: 0;
 }
 
+header {
+    background-color: #8785A2;
+    border-bottom: solid 2px black;
+    padding: 25px 20px;
+}
+
+h1 {
+    margin: 0;
+}
+
 nav {
-    background-color: blue;
+    background-color: #F6F6F6;
+    border-right: solid 1px black;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    max-width: 250px;
     min-height: inherit;
     position: fixed;
-    top: 70px;
+    top: 89px;
     bottom: 0;
-    padding: 45px;
+    padding: 45px 25px;
+    width: 250px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    min-width: inherit;
+}
+
+li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+a {
+    color: #F38181;
+    font-size: 1.3rem;
+    text-decoration: none;
+}
+
+button {
+    background: none;
+    border: solid 1px black;
+    border-radius: 2px;
 }
 
 .to-do {
     display: flex;
     flex-direction: column;
-    height: 5%;
+    align-items: center;
+    border-bottom: solid 1px black;
+    padding-bottom: 25px;
+    width: 200px;
 }
 
-section {
-    margin-left: 200px;
+.projects {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    min-width: 200px;
+}
+
+.position-section {
+    margin-left: 270px;
+}
+
+.modal {
+    background-color: rgba(0,0,0,0.4);
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    position: fixed; 
+    left: 0;
+    top: 0;
+    z-index: 1; 
+}
+
+form {
+    background: #8785A2;
+    border: solid 2px black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 200px auto auto;
+    padding: 50px 0 40px;
+    width: 400px;
+}
+
+form input {
+    box-sizing: border-box;
+    border: solid 2px black;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    height: 40px;
+    margin-bottom: 10px;
+    width: 250px;
+}
+
+form select {
+    box-sizing: border-box;
+    border: solid 2px black;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    height: 40px;
+    margin-bottom: 10px;
+    width: 250px;
+}
+
+form button {
+    font-size: 1.5rem;
+    margin-top: 25px;
 }
 
 .task-container {
