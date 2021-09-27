@@ -19,6 +19,7 @@ class ProjectUI {
                 return alert('Project already exists!');
             } else {
                 document.querySelector('.project-modal').style.display = "none";
+                document.querySelector('#add-project-form').reset();
                 const project = ProjectUI.addProject(info.title, info.description);
                 ProjectUI.generateProject(project);
             }

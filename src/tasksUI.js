@@ -32,6 +32,7 @@ class UI {
             e.preventDefault();
             UI.displayTask();
             document.querySelector('.task-modal').style = 'display: none';
+            document.querySelector('#add-task-form').reset()
             console.log(Task.tasks);
         });
     }
