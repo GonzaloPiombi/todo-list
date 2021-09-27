@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
 class Task {
-    constructor(title, description, dueDate, priority, project) {
+    constructor(title, dueDate, priority, project) {
         this.title = title;
-        this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.project = project;
@@ -33,11 +32,10 @@ class Task {
         }
     }
 
-    static editTask(id, title, description, dueDate, priority, project) {
+    static editTask(id, title, dueDate, priority, project) {
         const index = Task.tasks.findIndex(task => task.id == id);
         
         Task.tasks[index].title = title;
-        Task.tasks[index].description = description;
         Task.tasks[index].dueDate = dueDate;
         Task.tasks[index].priority = priority;
         Task.tasks[index].project = project;
@@ -46,9 +44,8 @@ class Task {
 }
 
 class Project {
-    constructor(title, description) {
+    constructor(title) {
         this.title = title;
-        this.description = description;
         this.tasks = [];
         this.id = uuidv4();
     }

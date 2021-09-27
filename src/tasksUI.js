@@ -20,7 +20,7 @@ class UI {
 
     static displayTask() {
         const info = UI.getInformation();
-        const task = UI.addTask(info.title, info.description, info.dueDate, info.priority, info.project);
+        const task = UI.addTask(info.title, info.dueDate, info.priority, info.project);
         const buttons = UI.generateTask(task);
         UI.removeTask(buttons.removeButton);
         UI.editTask(buttons.editButton);
@@ -32,7 +32,7 @@ class UI {
             e.preventDefault();
             UI.displayTask();
             document.querySelector('.task-modal').style = 'display: none';
-            document.querySelector('#add-task-form').reset()
+            document.querySelector('#add-task-form').reset();
             console.log(Task.tasks);
         });
     }
@@ -40,15 +40,14 @@ class UI {
     static getInformation() {
         const formInfo = document.querySelectorAll('input');
         const title = formInfo[0].value;
-        const description = formInfo[1].value;
-        const dueDate = formInfo[2].value;
+        const dueDate = formInfo[1].value;
         const priority = document.querySelectorAll('select')[0].value;
         const project = document.querySelectorAll('select')[1].value;
-        return {title, description, dueDate, priority, project};
+        return {title, dueDate, priority, project};
     }
 
-    static addTask(title, description, dueDate, priority, project) {
-        const newTask = new Task(title, description, dueDate, priority, project);
+    static addTask(title, dueDate, priority, project) {
+        const newTask = new Task(title, dueDate, priority, project);
         newTask.addToArray();
         return newTask;
     }
@@ -59,7 +58,6 @@ class UI {
         taskContainer.setAttribute('id', obj.id);
 
         const title = document.createElement('p');
-        const description = document.createElement('p');
         const dueDate = document.createElement('p');
         const priority = document.createElement('p');
         const project = document.createElement('p');
@@ -72,7 +70,6 @@ class UI {
         priority.classList.add('priority');
 
         title.textContent = obj.title;
-        description.textContent = obj.description;
         dueDate.textContent = obj.dueDate;
         priority.innerHTML= '&#9210';
         UI.definePriority(priority, obj.priority);
@@ -82,7 +79,6 @@ class UI {
 
         document.querySelector('.tasks').appendChild(taskContainer);
         taskContainer.appendChild(title);
-        taskContainer.appendChild(description);
         taskContainer.appendChild(dueDate);
         taskContainer.appendChild(priority);
         taskContainer.appendChild(project);
@@ -105,7 +101,7 @@ class UI {
     static removeTask(button) {
         button.addEventListener('click', e => {
             e.path[1].remove();
-            Task.removeFromArray(e.path[1].id, e.path[1].childNodes[4].textContent);
+            Task.removeFromArray(e.path[1].id, e.path[1].childNodes[3].textContent);
         });
     }
 
@@ -186,12 +182,11 @@ class UI {
         string = string.split('~');
         
         const title = string[0];
-        const description = string[1];
-        const dueDate = string[2];
-        const priority = string[3];
-        const project = string[4];
+        const dueDate = string[1];
+        const priority = string[2];
+        const project = string[3];
      
-        Task.editTask(div, title, description, dueDate, priority, project);
+        Task.editTask(div, title, dueDate, priority, project);
     }
 
     static dateFilter() {

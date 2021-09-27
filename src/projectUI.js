@@ -20,7 +20,7 @@ class ProjectUI {
             } else {
                 document.querySelector('.project-modal').style.display = "none";
                 document.querySelector('#add-project-form').reset();
-                const project = ProjectUI.addProject(info.title, info.description);
+                const project = ProjectUI.addProject(info.title);
                 ProjectUI.generateProject(project);
             }
         });
@@ -28,13 +28,12 @@ class ProjectUI {
 
     static getInformation() {
         const formInfo = document.querySelectorAll('input');
-        const title = formInfo[3].value;
-        const description = formInfo[4].value;
-        return {title, description};
+        const title = formInfo[2].value;
+        return {title};
     }
 
-    static addProject(title, description) {
-        const newProject = new Project(title, description);
+    static addProject(title) {
+        const newProject = new Project(title);
         newProject.addToArray();
         return newProject;
     }
