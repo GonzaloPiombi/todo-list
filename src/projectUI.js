@@ -3,6 +3,13 @@ import UI from './tasksUI';
 
 class ProjectUI {
 
+    static displayModal() {
+        const newProjectButton = document.querySelector('.new-project-button');
+        newProjectButton.addEventListener('click', () => {
+            document.querySelector('.project-modal').style = 'display: block';
+        });
+    }
+
     static addProjectButtonEvent() {
         const addProjectButton = document.querySelector('#add-project-form');
         addProjectButton.addEventListener('submit', e => {

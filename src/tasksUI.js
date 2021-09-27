@@ -3,6 +3,21 @@ import { compareAsc, format, isThisMonth, isThisWeek } from 'date-fns'
 
 class UI {
 
+    static displayModal() {
+        const newTaskButton = document.querySelector('.new-task-button');
+        newTaskButton.addEventListener('click', () => {
+            document.querySelector('.task-modal').style = 'display: block';
+        });
+
+        window.onclick = function(e) {
+            if (e.target == document.querySelector('.task-modal')) {
+                document.querySelector('.task-modal').style.display = "none";
+            } else if (e.target == document.querySelector('.project-modal')) {
+                document.querySelector('.project-modal').style.display = "none";
+            }
+        }
+    }
+
     static displayTask() {
         const info = UI.getInformation();
         const task = UI.addTask(info.title, info.description, info.dueDate, info.priority, info.project);
@@ -16,6 +31,7 @@ class UI {
         addTaskButton.addEventListener('submit', e => {
             e.preventDefault();
             UI.displayTask();
+            document.querySelector('.task-modal').style = 'display: none';
             console.log(Task.tasks);
         });
     }
