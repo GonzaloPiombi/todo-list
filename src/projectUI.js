@@ -8,17 +8,18 @@ class ProjectUI {
         addProjectButton.addEventListener('submit', e => {
             e.preventDefault();
             const info = ProjectUI.getInformation();
-            const project = ProjectUI.addProject(info.title, info.description);
-            ProjectUI.generateProject(project);
+            if (Project.checkExistingProject(info.title)) {
+                return alert('Project already exists!');
+            } else {
+                const project = ProjectUI.addProject(info.title, info.description);
+                ProjectUI.generateProject(project);
+            }
         });
     }
 
     static getInformation() {
         const formInfo = document.querySelectorAll('input');
         const title = formInfo[3].value;
-        if (Project.checkExistingProject(title)) {
-            return alert('Project already exists!');
-        }
         const description = formInfo[4].value;
         return {title, description};
     }
@@ -53,6 +54,9 @@ class ProjectUI {
     static displayProject(projectButton, project) {
         projectButton.addEventListener('click', (e) => {
             document.querySelector('.tasks').textContent = '';
+            const title = document.createElement('h1')
+            title.textContent = project.title;
+            document.querySelector('.tasks').appendChild(title);
             project.tasks.forEach(task =>{
                 const buttons = UI.generateTask(task);
                 UI.removeTask(buttons.removeButton);

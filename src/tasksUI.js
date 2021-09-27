@@ -188,6 +188,9 @@ class UI {
         const homeButton = document.querySelector('#home');
         homeButton.addEventListener('click', (e) => {
             document.querySelector('.tasks').textContent = '';
+            const title = document.createElement('h1')
+            title.textContent = 'Home';
+            document.querySelector('.tasks').appendChild(title);
             
             Task.tasks.forEach(task => {
                 const buttons = UI.generateTask(task);
@@ -205,6 +208,10 @@ class UI {
             const todayTasks = Task.tasks.filter(task => task.dueDate === dateFormat);
 
             document.querySelector('.tasks').textContent = '';
+            const title = document.createElement('h1')
+            title.textContent = 'Today';
+            document.querySelector('.tasks').appendChild(title);
+
             todayTasks.forEach(task => {
                 const buttons = UI.generateTask(task);
                 UI.removeTask(buttons.removeButton);
@@ -219,6 +226,9 @@ class UI {
         const weekButton = document.querySelector('#week');
         weekButton.addEventListener('click', () => {
             document.querySelector('.tasks').textContent = '';
+            const title = document.createElement('h1')
+            title.textContent = 'This week';
+            document.querySelector('.tasks').appendChild(title);
 
             const weekTasks = Task.tasks.filter(task => {
                 const date = task.dueDate.split('-');
@@ -239,6 +249,9 @@ class UI {
         const monthButton = document.querySelector('#month');
         monthButton.addEventListener('click', () => {
             document.querySelector('.tasks').textContent = '';
+            const title = document.createElement('h1')
+            title.textContent = 'This month';
+            document.querySelector('.tasks').appendChild(title);
 
             const monthTasks = Task.tasks.filter(task => {
                 const date = task.dueDate.split('-');
