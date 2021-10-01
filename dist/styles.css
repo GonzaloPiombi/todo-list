@@ -1,4 +1,5 @@
 body {
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }
 
@@ -9,6 +10,7 @@ header {
 }
 
 h1 {
+    font-size: 2rem;
     margin: 0;
 }
 
@@ -28,11 +30,21 @@ nav {
     width: 250px;
 }
 
+nav button {
+    border: none;
+    color: #f6f6f6;
+    cursor: pointer;
+}
+
+li:hover button {
+    color: black;
+}
+
 ul {
     list-style-type: none;
-    margin: 0;
+    margin: 0 0 0 10px;
     padding: 0;
-    min-width: inherit;
+    width: inherit;
 }
 
 li {
@@ -40,6 +52,21 @@ li {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: 3px 10px;
+}
+
+li:hover {
+    background-color: #d4d4d4;
+    border-radius: 10px;
+}
+
+.active {
+    background-color: #d4d4d4;
+    border-radius: 10px;
+}
+
+.active button {
+    color: #d4d4d4;
 }
 
 a {
@@ -51,13 +78,14 @@ a {
 button {
     background: none;
     border: solid 1px black;
-    border-radius: 2px;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
 .to-do {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     border-bottom: solid 1px black;
     padding-bottom: 25px;
     width: 200px;
@@ -66,12 +94,19 @@ button {
 .projects {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding-top: 25px;
-    min-width: 200px;
+    width: 200px;
 }
 
-.position-section {
+.buttons-section {
+    position: absolute;
+    right: 25px;
+    top: 110px;
+}
+
+.tasks {
+    margin-top: 10px;
     margin-left: 270px;
 }
 
@@ -111,6 +146,7 @@ form input {
 }
 
 form select {
+    background-color: white;
     box-sizing: border-box;
     border: solid 2px black;
     border-radius: 5px;
@@ -121,6 +157,7 @@ form select {
 }
 
 form button {
+    border: solid 2px black;
     font-size: 1.5rem;
     margin-top: 25px;
 }

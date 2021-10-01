@@ -65,6 +65,10 @@ class ProjectUI {
             const title = document.createElement('h1')
             title.textContent = project.title;
             document.querySelector('.tasks').appendChild(title);
+
+            UI.checkActiveClass();
+            projectButton.parentNode.classList.add('active');
+
             project.tasks.forEach(task =>{
                 const buttons = UI.generateTask(task);
                 UI.removeTask(buttons.removeButton);

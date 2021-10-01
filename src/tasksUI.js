@@ -79,9 +79,9 @@ class UI {
         editButton.textContent = 'Edit'
 
         document.querySelector('.tasks').appendChild(taskContainer);
+        taskContainer.appendChild(priority);
         taskContainer.appendChild(title);
         taskContainer.appendChild(dueDate);
-        taskContainer.appendChild(priority);
         taskContainer.appendChild(project);
         taskContainer.appendChild(removeButton);
         taskContainer.appendChild(editButton);
@@ -183,10 +183,10 @@ class UI {
 
     static getNewValues(string, div) {
         string = string.split('~');
-        
-        const title = string[0];
-        const dueDate = string[1];
-        const priority = string[2];
+
+        const priority = string[0];
+        const title = string[1];
+        const dueDate = string[2];
         const project = string[3];
      
         Task.editTask(div, title, dueDate, priority, project);
@@ -206,6 +206,9 @@ class UI {
             const title = document.createElement('h1')
             title.textContent = 'Home';
             document.querySelector('.tasks').appendChild(title);
+
+            UI.checkActiveClass();
+            homeButton.parentNode.classList.add('active');
             
             Task.tasks.forEach(task => {
                 const buttons = UI.generateTask(task);
@@ -227,6 +230,9 @@ class UI {
             title.textContent = 'Today';
             document.querySelector('.tasks').appendChild(title);
 
+            UI.checkActiveClass();
+            todayButton.parentNode.classList.add('active');
+
             todayTasks.forEach(task => {
                 const buttons = UI.generateTask(task);
                 UI.removeTask(buttons.removeButton);
@@ -244,6 +250,9 @@ class UI {
             const title = document.createElement('h1')
             title.textContent = 'This week';
             document.querySelector('.tasks').appendChild(title);
+
+            UI.checkActiveClass();
+            weekButton.parentNode.classList.add('active');
 
             const weekTasks = Task.tasks.filter(task => {
                 const date = task.dueDate.split('-');
@@ -268,6 +277,9 @@ class UI {
             title.textContent = 'This month';
             document.querySelector('.tasks').appendChild(title);
 
+            UI.checkActiveClass();
+            monthButton.parentNode.classList.add('active');
+
             const monthTasks = Task.tasks.filter(task => {
                 const date = task.dueDate.split('-');
                 const year = Number(date[0]);
@@ -280,6 +292,14 @@ class UI {
                     UI.editTask(buttons.editButton);
                 }
             });
+        });
+    }
+
+    static checkActiveClass() {
+        document.querySelectorAll('li').forEach(li => {
+            if (li.classList.contains('active')) {
+                li.classList.remove('active');
+            }
         });
     }
 }
