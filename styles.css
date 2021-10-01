@@ -1,12 +1,12 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Lato', sans-serif;
     margin: 0;
 }
 
 header {
     background-color: #8785A2;
     border-bottom: solid 2px black;
-    padding: 25px 20px;
+    padding: 25px 37px;
 }
 
 h1 {
@@ -24,7 +24,7 @@ nav {
     max-width: 250px;
     min-height: inherit;
     position: fixed;
-    top: 89px;
+    top: 91px;
     bottom: 0;
     padding: 45px 25px;
     width: 250px;
@@ -56,17 +56,17 @@ li {
 }
 
 li:hover {
-    background-color: #d4d4d4;
+    background-color: #ececec;
     border-radius: 10px;
 }
 
 .active {
-    background-color: #d4d4d4;
+    background-color: #ececec;
     border-radius: 10px;
 }
 
 .active button {
-    color: #d4d4d4;
+    color: #ececec;
 }
 
 a {
@@ -80,6 +80,11 @@ button {
     border: solid 1px black;
     border-radius: 5px;
     font-size: 1rem;
+}
+
+span {
+    color: #000000bf;
+    cursor: pointer;
 }
 
 .to-do {
@@ -102,12 +107,16 @@ button {
 .buttons-section {
     position: absolute;
     right: 25px;
-    top: 110px;
+    top: 115px;
 }
 
 .tasks {
-    margin-top: 10px;
+    margin-top: 15px;
     margin-left: 270px;
+}
+
+.tasks h1 {
+    margin-bottom: 15px;
 }
 
 .modal {
@@ -164,7 +173,46 @@ form button {
 
 .task-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 50%;
+    justify-content: space-between;
+    padding: 3px 5px;
+    transition: 1s;
+    width: 98%;
+}
+
+.task-container:hover {
+    background-color: red;
+    border-radius: 10px;
+}
+
+.task-container div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox {
+    margin-right: 5px;
+}
+
+.checkbox:hover {
+    color: green;
+}
+
+.title {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.priority {
+    margin: 5px 0 0;
+}
+
+.date {
+    margin: 0 15px; 
+}
+
+.project {
+    display: none;
+    margin: 0 15px;
 }
