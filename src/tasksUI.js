@@ -78,13 +78,19 @@ class UI {
         removeButton.textContent = 'X';
         editButton.textContent = 'Edit'
 
+        const leftContainer = document.createElement('div');
+        const rightContainer = document.createElement('div');
+
         document.querySelector('.tasks').appendChild(taskContainer);
-        taskContainer.appendChild(priority);
-        taskContainer.appendChild(title);
-        taskContainer.appendChild(dueDate);
-        taskContainer.appendChild(project);
-        taskContainer.appendChild(removeButton);
-        taskContainer.appendChild(editButton);
+        taskContainer.appendChild(leftContainer);
+        taskContainer.appendChild(rightContainer);
+
+        leftContainer.appendChild(title);
+        rightContainer.appendChild(project);
+        rightContainer.appendChild(priority);
+        rightContainer.appendChild(dueDate);
+        rightContainer.appendChild(editButton);
+        rightContainer.appendChild(removeButton);
 
         return {removeButton, editButton};
     }
@@ -101,95 +107,98 @@ class UI {
 
     static removeTask(button) {
         button.addEventListener('click', e => {
-            e.path[1].remove();
-            Task.removeFromArray(e.path[1].id, e.path[1].childNodes[3].textContent);
+            console.log(e);
+            e.path[2].remove();
+            Task.removeFromArray(e.path[2].id, e.path[2].childNodes[1].childNodes[0].textContent);
         });
     }
 
     static editTask(button) {
         button.addEventListener('click', e => {
             e.currentTarget.style = 'display: none';
-            const items = e.path[1].childNodes;
-            UI.edit(items);
+            console.log(e);
+
+            const title = e.path[2].childNodes[0].childNodes[0];
+            const priority = e.path[1].childNodes[1];
+            const date = e.path[1].childNodes[2];
+
+            const newData = UI.edit(title, priority, date);
 
             const saveButton = document.createElement('button');
             saveButton.textContent = 'Save';
             e.path[1].appendChild(saveButton);
 
             saveButton.addEventListener('click', e => {
-                UI.save(e, items, saveButton);
+                UI.save(e, title, newData.priority, newData.date, saveButton);
             });
         });
     }
 
-    static edit(items) {
-        items.forEach(item => {
-            if (item.nodeName === 'P' && item.classList.contains('date')) {
-                const date = document.createElement('input');
-                date.setAttribute('type', 'date');
-                date.classList.add('date');
-                item.replaceWith(date);
-            } else if (item.classList.contains('priority')) {
-                const priority = document.createElement('select');
-                priority.name = 'priority';
-                priority.classList.add('priority');
+    static edit(editTitle, editPriority, editDate) {
+        console.log(editTitle)
+        editTitle.contentEditable = true;
 
-                const low = document.createElement('option');
-                const medium = document.createElement('option');
-                const high = document.createElement('option');
+        const priority = document.createElement('select');
+        priority.name = 'priority';
+        priority.classList.add('priority');
 
-                low.value = 'low';
-                low.textContent = 'Low';
-                medium.value = 'medium';
-                medium.textContent = 'Medium';
-                high.value = 'high';
-                high.textContent = 'High';
+        const low = document.createElement('option');
+        const medium = document.createElement('option');
+        const high = document.createElement('option');
 
-                item.replaceWith(priority);
-                priority.appendChild(low);
-                priority.appendChild(medium);
-                priority.appendChild(high);
-            } else if (item.nodeName === 'P' && !item.classList.contains('project')) {
-                item.setAttribute('contenteditable', 'true');
-            }
-        });
+        low.value = 'low';
+        low.textContent = 'Low';
+        medium.value = 'medium';
+        medium.textContent = 'Medium';
+        high.value = 'high';
+        high.textContent = 'High';
+
+        editPriority.replaceWith(priority);
+        priority.appendChild(low);
+        priority.appendChild(medium);
+        priority.appendChild(high);
+
+        const date = document.createElement('input');
+        date.setAttribute('type', 'date');
+        date.classList.add('date');
+        editDate.replaceWith(date);
+
+        return {priority, date}
     }
 
-    static save(e, items, button) {
+    static save(e, title, priority, date, button) {
         let changes = '';
-        items.forEach(item => {
-            if (item.classList.contains('date')) {
-                changes += item.value + '~';
-                const para = document.createElement('p');
-                para.classList.add('date');
-                para.textContent = item.value;
-                item.replaceWith(para);
-            } else if (item.classList.contains('priority')) {
-                changes += item.value + '~';
-                const para = document.createElement('p');
-                para.classList.add('priority');
-                para.innerHTML = '&#9210';
-                UI.definePriority(para, item.value);
-                item.replaceWith(para);
-            } else if (item.contentEditable === 'true' || item.classList.contains('project')) {
-                changes += item.textContent + '~';
-                item.contentEditable = 'false';
-            }
-        });
-        UI.getNewValues(changes, e.path[1].id);
+
+        changes += title.textContent + '~';
+        title.contentEditable = false;
+
+        changes += priority.value + '~';
+        const newPriority = document.createElement('p');
+        newPriority.classList.add('priority');
+        newPriority.innerHTML = '&#9210';
+        UI.definePriority(newPriority, priority.value);
+        priority.replaceWith(newPriority);
+
+        changes += date.value + '~';
+        const newDate = document.createElement('p');
+        newDate.classList.add('date');
+        newDate.textContent = date.value;
+        date.replaceWith(newDate);
+
+        UI.getNewValues(changes, e.path[2].id);
         button.remove();
         e.path[1].lastChild.style = 'display: inline-block';
     }
 
     static getNewValues(string, div) {
         string = string.split('~');
+        console.log(string);
 
-        const priority = string[0];
-        const title = string[1];
+        const title = string[0];
+        const priority = string[1];
         const dueDate = string[2];
-        const project = string[3];
      
-        Task.editTask(div, title, dueDate, priority, project);
+        Task.editTask(div, title, dueDate, priority);
     }
 
     static dateFilter() {

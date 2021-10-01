@@ -32,13 +32,12 @@ class Task {
         }
     }
 
-    static editTask(id, title, dueDate, priority, project) {
+    static editTask(id, title, dueDate, priority) {
         const index = Task.tasks.findIndex(task => task.id == id);
         
         Task.tasks[index].title = title;
         Task.tasks[index].dueDate = dueDate;
         Task.tasks[index].priority = priority;
-        Task.tasks[index].project = project;
         console.log(Task.tasks);
     }
 }
