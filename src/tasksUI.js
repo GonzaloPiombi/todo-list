@@ -22,7 +22,7 @@ class UI {
         const info = UI.getInformation();
         const task = UI.addTask(info.title, info.dueDate, info.priority, info.project);
         const buttons = UI.generateTask(task);
-        UI.removeTask(buttons.removeButton);
+        UI.removeTask(buttons.removeButton, buttons.checkbox);
         UI.editTask(buttons.editButton);
     }
     
@@ -57,6 +57,7 @@ class UI {
         taskContainer.classList.add('task-container');
         taskContainer.setAttribute('id', obj.id);
 
+        const checkbox = document.createElement('span');
         const title = document.createElement('p');
         const dueDate = document.createElement('p');
         const priority = document.createElement('p');
@@ -64,17 +65,24 @@ class UI {
         const removeButton = document.createElement('span');
         const editButton = document.createElement('span');
 
+        title.classList.add('title');
         dueDate.classList.add('date');
         project.classList.add('project');
         priority.classList.add('priority');
+        checkbox.classList.add('material-icons-outlined', 'checkbox');
         removeButton.classList.add('material-icons-outlined');
         editButton.classList.add('edit-button', 'material-icons-outlined');
 
         title.textContent = obj.title;
-        dueDate.textContent = obj.dueDate;
+        if (obj.dueDate === '') {
+            dueDate.textContent = 'No date';
+        } else {
+            dueDate.textContent = obj.dueDate;
+        }
         priority.innerHTML= '&#9210';
         UI.definePriority(priority, obj.priority);
         project.textContent = obj.project;
+        checkbox.textContent = 'radio_button_unchecked';
         removeButton.textContent = 'delete';
         editButton.textContent = 'edit'
 
@@ -85,6 +93,7 @@ class UI {
         taskContainer.appendChild(leftContainer);
         taskContainer.appendChild(rightContainer);
 
+        leftContainer.appendChild(checkbox);
         leftContainer.appendChild(title);
         rightContainer.appendChild(project);
         rightContainer.appendChild(priority);
@@ -92,7 +101,7 @@ class UI {
         rightContainer.appendChild(editButton);
         rightContainer.appendChild(removeButton);
 
-        return {removeButton, editButton};
+        return {removeButton, editButton, checkbox};
     }
 
     static definePriority(priority, value) {
@@ -105,12 +114,14 @@ class UI {
         }
     }
 
-    static removeTask(button) {
-        button.addEventListener('click', e => {
-            console.log(e);
-            e.path[2].remove();
-            Task.removeFromArray(e.path[2].id, e.path[2].childNodes[1].childNodes[0].textContent);
-        });
+    static removeTask(button1, button2) {
+        button1.addEventListener('click', e => UI.removeOrComplete(e));
+        button2.addEventListener('click', e => UI.removeOrComplete(e));
+    }
+
+    static removeOrComplete(e) {
+        e.path[2].remove();
+        Task.removeFromArray(e.path[2].id, e.path[2].childNodes[1].childNodes[0].textContent);
     }
 
     static editTask(button) {
@@ -118,7 +129,7 @@ class UI {
             e.currentTarget.style = 'display: none';
             console.log(e);
 
-            const title = e.path[2].childNodes[0].childNodes[0];
+            const title = e.path[2].childNodes[0].childNodes[1];
             const priority = e.path[1].childNodes[1];
             const date = e.path[1].childNodes[2];
 
@@ -220,7 +231,7 @@ class UI {
             
             Task.tasks.forEach(task => {
                 const buttons = UI.generateTask(task);
-                UI.removeTask(buttons.removeButton);
+                UI.removeTask(buttons.removeButton, buttons.checkbox);
                 UI.editTask(buttons.editButton);
             });
         });
@@ -243,7 +254,7 @@ class UI {
 
             todayTasks.forEach(task => {
                 const buttons = UI.generateTask(task);
-                UI.removeTask(buttons.removeButton);
+                UI.removeTask(buttons.removeButton, buttons.checkbox);
                 UI.editTask(buttons.editButton);
             });
             console.log(todayTasks)
@@ -270,7 +281,7 @@ class UI {
                 const thisWeek = isThisWeek(new Date(year, month, day));
                 if (thisWeek) {
                     const buttons = UI.generateTask(task);
-                    UI.removeTask(buttons.removeButton);
+                    UI.removeTask(buttons.removeButton, buttons.checkbox);
                     UI.editTask(buttons.editButton);
                 }
             });
@@ -296,7 +307,7 @@ class UI {
                 const thisMonth = isThisMonth(new Date(year, month, day));
                 if (thisMonth) {
                     const buttons = UI.generateTask(task);
-                    UI.removeTask(buttons.removeButton);
+                    UI.removeTask(buttons.removeButton, buttons.checkbox);
                     UI.editTask(buttons.editButton);
                 }
             });
