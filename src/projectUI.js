@@ -71,7 +71,7 @@ class ProjectUI {
 
             project.tasks.forEach(task =>{
                 const buttons = UI.generateTask(task);
-                UI.removeTask(buttons.removeButton);
+                UI.removeTask(buttons.removeButton, buttons.checkbox);
                 UI.editTask(buttons.editButton);
             });
         });
