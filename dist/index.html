@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <title>To-do List</title>
 </head>
 <body>
@@ -15,7 +20,7 @@
         <nav>
             <div class="to-do">
                 <ul>
-                    <li><a href="#" id="home">Home</a></li>
+                    <li class="active"><a href="#" id="home">Home</a></li>
                     <li><a href="#" id="today">Today</a></li>
                     <li><a href="#" id="week">This week</a></li>
                     <li><a href="#" id="month">This month</a></li>
@@ -27,14 +32,13 @@
                 </ul>
             </div>
         </nav>
-        <section class="position-section">
+        <section class="buttons-section">
             <button class="new-task-button" type="button">New Task</button>
             <button class="new-project-button" type="button">New Project</button>
         </section>
         <section class="task-modal modal">
             <form id="add-task-form" action="">
                 <input type="text" required placeholder="Title">
-                <input type="text" placeholder="Description">
                 <input type="date">
                 <select name="priority" id="">
                     <option value="low">Low priority</option>
@@ -50,11 +54,10 @@
         <section class="project-modal modal">
             <form id="add-project-form" action="">
                 <input type="text" required placeholder="Title">
-                <input type="text" placeholder="Description">
                 <button id="add-project-button" type="submit">Add project</button>
             </form>
         </section>
-        <section class="tasks position-section">
+        <section class="tasks">
             <h1>Home</h1>
         </section>
     </main>
