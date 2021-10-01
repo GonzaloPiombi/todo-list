@@ -61,22 +61,22 @@ class UI {
         const dueDate = document.createElement('p');
         const priority = document.createElement('p');
         const project = document.createElement('p');
-        const removeButton = document.createElement('button');
-        const editButton = document.createElement('button');
+        const removeButton = document.createElement('span');
+        const editButton = document.createElement('span');
 
-        //Add class so when we want to edit date is treated differently from the other inputs and can only be updated as a date.
         dueDate.classList.add('date');
         project.classList.add('project');
         priority.classList.add('priority');
-        editButton.classList.add('edit-button');
+        removeButton.classList.add('material-icons-outlined');
+        editButton.classList.add('edit-button', 'material-icons-outlined');
 
         title.textContent = obj.title;
         dueDate.textContent = obj.dueDate;
         priority.innerHTML= '&#9210';
         UI.definePriority(priority, obj.priority);
         project.textContent = obj.project;
-        removeButton.textContent = 'X';
-        editButton.textContent = 'Edit'
+        removeButton.textContent = 'delete';
+        editButton.textContent = 'edit'
 
         const leftContainer = document.createElement('div');
         const rightContainer = document.createElement('div');
@@ -124,10 +124,11 @@ class UI {
 
             const newData = UI.edit(title, priority, date);
 
-            const saveButton = document.createElement('button');
-            saveButton.textContent = 'Save';
-            e.path[1].appendChild(saveButton);
-
+            const saveButton = document.createElement('span');
+            saveButton.classList.add('material-icons-outlined');
+            saveButton.textContent = 'save';
+            e.path[1].insertBefore(saveButton, e.path[1].childNodes[3]);
+        
             saveButton.addEventListener('click', e => {
                 UI.save(e, title, newData.priority, newData.date, saveButton);
             });
@@ -135,7 +136,6 @@ class UI {
     }
 
     static edit(editTitle, editPriority, editDate) {
-        console.log(editTitle)
         editTitle.contentEditable = true;
 
         const priority = document.createElement('select');
@@ -187,12 +187,11 @@ class UI {
 
         UI.getNewValues(changes, e.path[2].id);
         button.remove();
-        e.path[1].lastChild.style = 'display: inline-block';
+        e.path[1].childNodes[3].style = 'display: inline-block';
     }
 
     static getNewValues(string, div) {
         string = string.split('~');
-        console.log(string);
 
         const title = string[0];
         const priority = string[1];
