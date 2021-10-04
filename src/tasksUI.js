@@ -196,6 +196,7 @@ class UI {
         const date = document.createElement('input');
         date.setAttribute('type', 'date');
         date.classList.add('date');
+        date.value = editDate.textContent;
         editDate.replaceWith(date);
 
         return {priority, date}
