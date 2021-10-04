@@ -1,10 +1,12 @@
 body {
+    background-color: #F6F6F6;
     font-family: 'Lato', sans-serif;
     margin: 0;
+    min-height: 100vh;
 }
 
 header {
-    background-color: #8785A2;
+    background-color: #9793c3;
     border-bottom: solid 2px black;
     padding: 25px 37px;
 }
@@ -35,6 +37,7 @@ nav {
 }
 
 nav button {
+    background: none;
     border: none;
     color: #f6f6f6;
     cursor: pointer;
@@ -57,20 +60,21 @@ li {
     align-items: center;
     justify-content: space-between;
     padding: 3px 10px;
+    transition: 0.4s;
 }
 
 li:hover {
-    background-color: #ececec;
+    background-color: #e4e4e4;
     border-radius: 10px;
 }
 
 .active {
-    background-color: #ececec;
+    background-color: #e4e4e4;
     border-radius: 10px;
 }
 
 .active button {
-    color: #ececec;
+    color: #e4e4e4;
 }
 
 a {
@@ -80,7 +84,7 @@ a {
 }
 
 button {
-    background: none;
+    background-color: #cfcde2;
     border: solid 1px black;
     border-radius: 5px;
     font-size: 1rem;
@@ -111,7 +115,11 @@ span {
 .buttons-section {
     position: absolute;
     right: 18px;
-    top: 115px;
+    top: 118px;
+}
+
+.buttons-section button {
+    margin: 0 5px;
 }
 
 .tasks {
@@ -177,16 +185,17 @@ form button {
 }
 
 .task-container {
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 3px 5px;
-    transition: 1s;
+    transition: 0.4s;
     width: 98%;
 }
 
 .task-container:hover {
-    background-color: red;
+    background-color: #e4e4e4;
     border-radius: 10px;
 }
 
@@ -227,6 +236,10 @@ form button {
         right: 310px;
     }
 
+    .buttons-section button {
+        font-size: 1.1rem;
+    }
+
     .tasks {
         margin-right: 300px;
         margin-left: 570px;
@@ -238,7 +251,15 @@ form button {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 25px 30px;
+        padding: 18px 20px;
+    }
+
+    a {
+        font-size: 1.2rem;
+    }
+
+    .buttons-section {
+        top: 101px;
     }
 
     .mobile-menu {
@@ -252,6 +273,8 @@ form button {
 
     nav {
         display: none;
+        top: 77px;
+        padding: 30px 15px;
     }
 
     .tasks {
@@ -260,6 +283,52 @@ form button {
 
     .tasks h1 {
         font-size: 1.7rem;
+    }
+
+    .task-container input {
+        font-size: 0.8rem;
+        height: 15px;
+        width: 90px;
+    }
+
+    .task-container select {
+        width: 48px;
+    }
+}
+
+@media (max-width: 450px) {    
+    form {
+        width: 300px;
+    }
+
+    form input {
+        font-size: 1.1rem;
+        width: 200px;
+    }
+
+    form select {
+        font-size: 1.1rem;
+        width: 200px;
+    }
+
+    #add-project-form {
+        padding: 40px 0 30px;
+    }
+
+    #add-project-button {
+        margin-top: 20px;
+    }
+
+    .title {
+        font-size: 1.1rem;
+    }
+
+    .date {
+        font-size: 0.9rem;
+    }
+
+    .task-container span {
+        font-size: 20px;
     }
 }
 
@@ -273,6 +342,48 @@ form button {
     }
 
     .buttons-section {
-        top: 113px;
+        top: 99px;
+    }
+
+    form {
+        padding: 30px 0 25px;
+        width: 220px;
+    }
+
+    form input {
+        font-size: 0.9rem;
+        height: 35px;
+        width: 170px;
+    }
+
+    form select {
+        font-size: 0.9rem;
+        height: 35px;
+        width: 170px;
+    }
+
+    form button {
+        font-size: 1.3rem;
+        margin-top: 10px;
+    }
+
+    #add-task-form {
+        padding: 30px 0 25px;
+    }
+
+    #add-project-form {
+        padding: 25px 0 20px;
+    }
+
+    #add-project-button {
+        margin-top: 5px;
+    }
+
+    .title {
+        font-size: 0.9rem;
+    }
+
+    .date {
+        font-size: 0.7rem;
     }
 }
