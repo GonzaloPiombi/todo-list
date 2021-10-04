@@ -1,7 +1,10 @@
 import { Project, Task } from './tasks';
 import { compareAsc, format, isThisMonth, isThisWeek } from 'date-fns'
+import ProjectUI from './projectUI';
 
 class UI {
+
+    static currentTab = 'home';
 
     static displayModal() {
         const newTaskButton = document.querySelector('.new-task-button');
@@ -24,6 +27,7 @@ class UI {
         const buttons = UI.generateTask(task);
         UI.removeTask(buttons.removeButton, buttons.checkbox);
         UI.editTask(buttons.editButton);
+        UI.getCurrentTab();
     }
     
     static addTaskButtonEvent() {
@@ -111,6 +115,26 @@ class UI {
             priority.style = 'color: yellow';
         } else {
             priority.style = 'color: red';
+        }
+    }
+
+    static getCurrentTab () {
+        switch (UI.currentTab) {
+            case 'home':
+                UI.home(document.querySelector('#home'));
+                break;
+            case 'today':
+                UI.today(document.querySelector('#today'));
+                break;
+            case 'week':
+                UI.week(document.querySelector('#week'));
+                break;
+            case 'month':
+                UI.month(document.querySelector('#month'));
+                break;
+            default:
+                ProjectUI.display(ProjectUI.currentTabButton, UI.currentTab);
+                break;
         }
     }
 
@@ -220,98 +244,118 @@ class UI {
 
     static homeFilter() {
         const homeButton = document.querySelector('#home');
-        homeButton.addEventListener('click', (e) => {
-            document.querySelector('.tasks').textContent = '';
-            const title = document.createElement('h1')
-            title.textContent = 'Home';
-            document.querySelector('.tasks').appendChild(title);
-
-            UI.checkActiveClass();
-            homeButton.parentNode.classList.add('active');
-            
-            Task.tasks.forEach(task => {
-                const buttons = UI.generateTask(task);
-                UI.removeTask(buttons.removeButton, buttons.checkbox);
-                UI.editTask(buttons.editButton);
-            });
+        homeButton.addEventListener('click', () => {
+            UI.home(homeButton);
         });
+    }
+
+    static home(button) {
+        document.querySelector('.tasks').textContent = '';
+        const title = document.createElement('h1')
+        title.textContent = 'Home';
+        document.querySelector('.tasks').appendChild(title);
+
+        UI.checkActiveClass();
+        button.parentNode.classList.add('active');
+        
+        Task.tasks.forEach(task => {
+            const buttons = UI.generateTask(task);
+            UI.removeTask(buttons.removeButton, buttons.checkbox);
+            UI.editTask(buttons.editButton);
+        });
+        UI.currentTab = 'home';
     }
 
     static todayFilter() {
         const todayButton = document.querySelector('#today');
         todayButton.addEventListener('click', () => {
-            const date = new Date();
-            const dateFormat = format(date, 'yyyy-MM-dd');
-            const todayTasks = Task.tasks.filter(task => task.dueDate === dateFormat);
-
-            document.querySelector('.tasks').textContent = '';
-            const title = document.createElement('h1')
-            title.textContent = 'Today';
-            document.querySelector('.tasks').appendChild(title);
-
-            UI.checkActiveClass();
-            todayButton.parentNode.classList.add('active');
-
-            todayTasks.forEach(task => {
-                const buttons = UI.generateTask(task);
-                UI.removeTask(buttons.removeButton, buttons.checkbox);
-                UI.editTask(buttons.editButton);
-            });
-            console.log(todayTasks)
-            console.log(Task.tasks)
+            UI.today(todayButton);
         });
+    }
+
+    static today(button) {
+        const date = new Date();
+        const dateFormat = format(date, 'yyyy-MM-dd');
+        const todayTasks = Task.tasks.filter(task => task.dueDate === dateFormat);
+
+        document.querySelector('.tasks').textContent = '';
+        const title = document.createElement('h1')
+        title.textContent = 'Today';
+        document.querySelector('.tasks').appendChild(title);
+
+        UI.checkActiveClass();
+        button.parentNode.classList.add('active');
+
+        todayTasks.forEach(task => {
+            const buttons = UI.generateTask(task);
+            UI.removeTask(buttons.removeButton, buttons.checkbox);
+            UI.editTask(buttons.editButton);
+        });
+        console.log(todayTasks);
+        console.log(Task.tasks);
+        UI.currentTab = 'today';
     }
 
     static weekFilter() {
         const weekButton = document.querySelector('#week');
         weekButton.addEventListener('click', () => {
-            document.querySelector('.tasks').textContent = '';
-            const title = document.createElement('h1')
-            title.textContent = 'This week';
-            document.querySelector('.tasks').appendChild(title);
-
-            UI.checkActiveClass();
-            weekButton.parentNode.classList.add('active');
-
-            const weekTasks = Task.tasks.filter(task => {
-                const date = task.dueDate.split('-');
-                const year = Number(date[0]);
-                const month = Number(date[1]) - 1;
-                const day = Number(date[2]);
-                const thisWeek = isThisWeek(new Date(year, month, day));
-                if (thisWeek) {
-                    const buttons = UI.generateTask(task);
-                    UI.removeTask(buttons.removeButton, buttons.checkbox);
-                    UI.editTask(buttons.editButton);
-                }
-            });
+            UI.week(weekButton);
         });
+    }
+
+    static week(button) {
+        document.querySelector('.tasks').textContent = '';
+        const title = document.createElement('h1')
+        title.textContent = 'This week';
+        document.querySelector('.tasks').appendChild(title);
+
+        UI.checkActiveClass();
+        button.parentNode.classList.add('active');
+
+        const weekTasks = Task.tasks.filter(task => {
+            const date = task.dueDate.split('-');
+            const year = Number(date[0]);
+            const month = Number(date[1]) - 1;
+            const day = Number(date[2]);
+            const thisWeek = isThisWeek(new Date(year, month, day));
+            if (thisWeek) {
+                const buttons = UI.generateTask(task);
+                UI.removeTask(buttons.removeButton, buttons.checkbox);
+                UI.editTask(buttons.editButton);
+            }
+        });
+        UI.currentTab = 'week';
     }
 
     static monthFilter() {
         const monthButton = document.querySelector('#month');
         monthButton.addEventListener('click', () => {
-            document.querySelector('.tasks').textContent = '';
-            const title = document.createElement('h1')
-            title.textContent = 'This month';
-            document.querySelector('.tasks').appendChild(title);
-
-            UI.checkActiveClass();
-            monthButton.parentNode.classList.add('active');
-
-            const monthTasks = Task.tasks.filter(task => {
-                const date = task.dueDate.split('-');
-                const year = Number(date[0]);
-                const month = Number(date[1]) - 1;
-                const day = Number(date[2]);
-                const thisMonth = isThisMonth(new Date(year, month, day));
-                if (thisMonth) {
-                    const buttons = UI.generateTask(task);
-                    UI.removeTask(buttons.removeButton, buttons.checkbox);
-                    UI.editTask(buttons.editButton);
-                }
-            });
+            UI.month(monthButton);
         });
+    }
+
+    static month(button) {
+        document.querySelector('.tasks').textContent = '';
+        const title = document.createElement('h1')
+        title.textContent = 'This month';
+        document.querySelector('.tasks').appendChild(title);
+
+        UI.checkActiveClass();
+        button.parentNode.classList.add('active');
+
+        const monthTasks = Task.tasks.filter(task => {
+            const date = task.dueDate.split('-');
+            const year = Number(date[0]);
+            const month = Number(date[1]) - 1;
+            const day = Number(date[2]);
+            const thisMonth = isThisMonth(new Date(year, month, day));
+            if (thisMonth) {
+                const buttons = UI.generateTask(task);
+                UI.removeTask(buttons.removeButton, buttons.checkbox);
+                UI.editTask(buttons.editButton);
+            }
+        });
+        UI.currentTab = 'month';
     }
 
     static checkActiveClass() {

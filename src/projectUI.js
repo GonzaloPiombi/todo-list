@@ -3,6 +3,8 @@ import UI from './tasksUI';
 
 class ProjectUI {
 
+    static currentTabButton = '';
+
     static displayModal() {
         const newProjectButton = document.querySelector('.new-project-button');
         newProjectButton.addEventListener('click', () => {
@@ -60,21 +62,27 @@ class ProjectUI {
     }
 
     static displayProject(projectButton, project) {
-        projectButton.addEventListener('click', (e) => {
-            document.querySelector('.tasks').textContent = '';
-            const title = document.createElement('h1')
-            title.textContent = project.title;
-            document.querySelector('.tasks').appendChild(title);
-
-            UI.checkActiveClass();
-            projectButton.parentNode.classList.add('active');
-
-            project.tasks.forEach(task =>{
-                const buttons = UI.generateTask(task);
-                UI.removeTask(buttons.removeButton, buttons.checkbox);
-                UI.editTask(buttons.editButton);
-            });
+        projectButton.addEventListener('click', () => {
+            ProjectUI.display(projectButton, project);
         });
+    }
+
+    static display(projectButton, project) {
+        document.querySelector('.tasks').textContent = '';
+        const title = document.createElement('h1');
+        title.textContent = project.title;
+        document.querySelector('.tasks').appendChild(title);
+
+        UI.checkActiveClass();
+        projectButton.parentNode.classList.add('active');
+
+        project.tasks.forEach(task =>{
+            const buttons = UI.generateTask(task);
+            UI.removeTask(buttons.removeButton, buttons.checkbox);
+            UI.editTask(buttons.editButton);
+        });
+        UI.currentTab = project;
+        ProjectUI.currentTabButton = projectButton;
     }
 
     static removeProject(button, obj) {
