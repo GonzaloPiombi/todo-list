@@ -220,7 +220,6 @@ form button {
 
 .priority {
     font-size: 20px;
-    margin: 5px 0 0;
 }
 
 .date {
@@ -361,6 +360,10 @@ form button {
 }
 
 @media (max-width: 320px) {
+    .tasks h1 {
+        margin-bottom: 30px;
+    }
+
     button {
         font-size: 0.7rem;
     }
