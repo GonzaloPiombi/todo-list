@@ -1,6 +1,8 @@
 import { Project, Task } from './tasks';
 import { compareAsc, format, isThisMonth, isThisWeek } from 'date-fns'
 import ProjectUI from './projectUI';
+import {setStorage, getStorage} from './storage';
+
 
 class UI {
 
@@ -53,6 +55,7 @@ class UI {
     static addTask(title, dueDate, priority, project) {
         const newTask = new Task(title, dueDate, priority, project);
         newTask.addToArray();
+        setStorage();
         return newTask;
     }
 
@@ -146,6 +149,7 @@ class UI {
     static removeOrComplete(e) {
         e.path[2].remove();
         Task.removeFromArray(e.path[2].id, e.path[2].childNodes[1].childNodes[0].textContent);
+        setStorage();
     }
 
     static editTask(button) {
@@ -234,6 +238,7 @@ class UI {
         const dueDate = string[2];
      
         Task.editTask(div, title, dueDate, priority);
+        setStorage();
     }
 
     static dateFilter() {

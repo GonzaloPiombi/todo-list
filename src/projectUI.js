@@ -1,3 +1,4 @@
+import { setStorage } from './storage';
 import { Task, Project } from './tasks';
 import UI from './tasksUI';
 
@@ -37,6 +38,7 @@ class ProjectUI {
     static addProject(title) {
         const newProject = new Project(title);
         newProject.addToArray();
+        setStorage();
         return newProject;
     }
 
@@ -109,6 +111,7 @@ class ProjectUI {
                     option.remove();
                 }
             });
+            setStorage();
         });
     }
 }

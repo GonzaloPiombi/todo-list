@@ -1,6 +1,8 @@
-import Task, { Project } from './tasks';
 import UI from './tasksUI';
 import ProjectUI from './projectUI';
+import {setStorage, getStorage} from './storage';
+
+window.onload = () => getStorage();
 
 UI.displayModal();
 ProjectUI.displayModal();
