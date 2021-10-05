@@ -219,6 +219,7 @@ form button {
 }
 
 .priority {
+    font-size: 20px;
     margin: 5px 0 0;
 }
 
@@ -248,7 +249,7 @@ form button {
 
 @media (min-width: 601px) {
     .buttons-section {
-        display: block !important;
+        display: flex !important;
     }
 
     nav {
@@ -311,6 +312,18 @@ form button {
 }
 
 @media (max-width: 450px) {    
+    .tasks h1 {
+        font-size: 1.5rem;
+    }
+
+    .buttons-section {
+        top: 98px;
+    }
+
+    .buttons-section button {
+        font-size: 0.9rem;
+    }
+
     form {
         margin-top: 150px;
         width: 300px;
@@ -348,16 +361,17 @@ form button {
 }
 
 @media (max-width: 320px) {
-    .tasks h1 {
-        font-size: 1.6rem;
-    }
-
     button {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
     }
 
     .buttons-section {
-        top: 99px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 55px;
+        width: fit-content;
+        top: 95px;
     }
 
     form {
