@@ -39,7 +39,6 @@ class UI {
             UI.displayTask();
             document.querySelector('.task-modal').style = 'display: none';
             document.querySelector('#add-task-form').reset();
-            console.log(Task.tasks);
         });
     }
 
@@ -155,7 +154,6 @@ class UI {
     static editTask(button) {
         button.addEventListener('click', e => {
             e.currentTarget.style = 'display: none';
-            console.log(e);
 
             const title = e.path[2].childNodes[0].childNodes[1];
             const priority = e.path[1].childNodes[1];
@@ -297,8 +295,6 @@ class UI {
             UI.removeTask(buttons.removeButton, buttons.checkbox);
             UI.editTask(buttons.editButton);
         });
-        console.log(todayTasks);
-        console.log(Task.tasks);
         UI.currentTab = 'today';
     }
 

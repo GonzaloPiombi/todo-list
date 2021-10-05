@@ -31,7 +31,6 @@ function displayTask(task) {
 function getProjects() {
     let projects = localStorage.getItem('projects');
     projects = JSON.parse(projects);
-    console.log(projects);
     
     for (let i = 0; i < projects.length; i++) {
         Project.projects.push(projects[i]);

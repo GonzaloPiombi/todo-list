@@ -38,7 +38,6 @@ class Task {
         Task.tasks[index].title = title;
         Task.tasks[index].dueDate = dueDate;
         Task.tasks[index].priority = priority;
-        console.log(Task.tasks);
     }
 }
 
