@@ -120,7 +120,7 @@ class UI {
         }
     }
 
-    static getCurrentTab () {
+    static getCurrentTab() {
         switch (UI.currentTab) {
             case 'home':
                 UI.home(document.querySelector('#home'));
@@ -183,6 +183,14 @@ class UI {
         const medium = document.createElement('option');
         const high = document.createElement('option');
 
+        if (editPriority.style.color === 'red') {
+            high.selected = true;
+        } else if (editPriority.style.color === 'yellow') {
+            medium.selected = true;
+        } else {
+            low.selected = true;
+        }
+
         low.value = 'low';
         low.textContent = 'Low';
         medium.value = 'medium';
@@ -220,7 +228,11 @@ class UI {
         changes += date.value + '~';
         const newDate = document.createElement('p');
         newDate.classList.add('date');
-        newDate.textContent = date.value;
+        if (date.value === '') {
+            newDate.textContent = 'No date';
+        } else {
+            newDate.textContent = date.value;
+        }
         date.replaceWith(newDate);
 
         UI.getNewValues(changes, e.path[2].id);
