@@ -66,7 +66,7 @@ class UI {
         const checkbox = document.createElement('span');
         const title = document.createElement('p');
         const dueDate = document.createElement('p');
-        const priority = document.createElement('p');
+        const priority = document.createElement('span');
         const project = document.createElement('p');
         const removeButton = document.createElement('span');
         const editButton = document.createElement('span');
@@ -74,7 +74,7 @@ class UI {
         title.classList.add('title');
         dueDate.classList.add('date');
         project.classList.add('project');
-        priority.classList.add('priority');
+        priority.classList.add('priority', 'material-icons');
         checkbox.classList.add('material-icons-outlined', 'checkbox');
         removeButton.classList.add('material-icons-outlined');
         editButton.classList.add('edit-button', 'material-icons-outlined');
@@ -85,7 +85,7 @@ class UI {
         } else {
             dueDate.textContent = obj.dueDate;
         }
-        priority.innerHTML= '&#9210';
+        priority.textContent = 'circle';
         UI.definePriority(priority, obj.priority);
         project.textContent = obj.project;
         checkbox.textContent = 'radio_button_unchecked';
@@ -211,9 +211,9 @@ class UI {
         title.contentEditable = false;
 
         changes += priority.value + '~';
-        const newPriority = document.createElement('p');
-        newPriority.classList.add('priority');
-        newPriority.innerHTML = '&#9210';
+        const newPriority = document.createElement('span');
+        newPriority.classList.add('priority', 'material-icons');
+        newPriority.textContent = 'circle';
         UI.definePriority(newPriority, priority.value);
         priority.replaceWith(newPriority);
 

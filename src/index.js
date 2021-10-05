@@ -17,7 +17,7 @@ function createMobileMenu() {
     mobileMenuIcon.addEventListener('click', () => {
         if (document.querySelector('nav').style.display === 'flex') {
             document.querySelector('nav').style.display = 'none';
-            document.querySelector('.buttons-section').style.display = 'block';
+            document.querySelector('.buttons-section').style.display = 'flex';
         } else {
             document.querySelector('nav').style.display = 'flex';
             document.querySelector('.buttons-section').style.display = 'none';
