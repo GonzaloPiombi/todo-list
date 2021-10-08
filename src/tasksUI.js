@@ -79,7 +79,7 @@ class UI {
         removeButton.classList.add('material-icons-outlined');
         editButton.classList.add('edit-button', 'material-icons-outlined');
 
-        checkbox.setAttribute('onclick', '');
+        checkbox.onclick = '';
         removeButton.setAttribute('onclick', '');
 
         title.textContent = obj.title;
