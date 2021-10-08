@@ -79,8 +79,8 @@ class UI {
         removeButton.classList.add('material-icons-outlined');
         editButton.classList.add('edit-button', 'material-icons-outlined');
 
-        checkbox.setAttribute("onclick", "''");
-        removeButton.setAttribute("onclick", "''");
+        checkbox.setAttribute('onclick', '');
+        removeButton.setAttribute('onclick', '');
 
         title.textContent = obj.title;
         if (obj.dueDate === '') {
